@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js"></script>
+    <title>Resume Builder</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <form id="resume-form">
+            <h1>Resume Builder</h1>
+
+            <!-- Contact Information -->
+            <section id="contact-info">
+                <h2>Contact Information</h2>
+                <input type="text" id="name" placeholder="Name" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="tel" id="phone" placeholder="Phone" required>
+                <input type="text" id="address" placeholder="Address" required>
+                <div class="profile-pic-container">
+                    <input type="file" id="profile-pic" accept="image/*" onchange="previewImage(event)">
+                    <img id="profile-pic-preview" class="profile-pic" src="" alt="Profile Picture">
+                    <button type="button" onclick="editProfilePic()">Edit Profile Picture</button>
+                </div>
+            </section>
+
+            <!-- Education Section -->
+            <section id="education-section">
+                <h2>Education</h2>
+                <button type="button" onclick="addEducation()" class="add-button">Add Education</button>
+            </section>
+
+            <!-- Work Experience Section -->
+            <section id="work-section">
+                <h2>Work Experience</h2>
+                <button type="button" onclick="addWorkExperience()" class="add-button">Add Work Experience</button>
+            </section>
+
+            <!-- Skills Section -->
+            <section id="skills-section">
+                <h2>Skills</h2>
+                <button type="button" onclick="addSkill()" class="add-button">Add Skill</button>
+            </section>
+
+            <button type="submit" class="submit-button">Generate Resume</button>
+        </form>
+
+        <!-- Resume Output -->
+        <div id="resume-output" class="resume-output" style="display:none;">
+            <button id="edit-resume" class="edit-button" onclick="editResume()">Edit Resume</button>
+            <button id="download-resume" class="submit-button" onclick="downloadResume()">Download Resume</button>
+        </div>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
