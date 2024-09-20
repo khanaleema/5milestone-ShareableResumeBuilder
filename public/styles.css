@@ -128,6 +128,7 @@ button:hover {
     margin-top: 30px;
     background-color: #ffffff;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Slightly heavier shadow */
+    
 }
 
 .resume-header {
@@ -190,4 +191,7 @@ button:hover {
 
 .resume-section ul li:hover {
     background-color: #e0f7fa; /* Lighter Aqua */
+}
+.hidden {
+    display: none;
 }

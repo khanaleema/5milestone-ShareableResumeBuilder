@@ -1,143 +1,111 @@
-"use strict";
-const resumeForm = document.getElementById('resume-form');
-const resumeOutput = document.getElementById('resume-output');
-const profilePicFileInput = document.getElementById('profile-pic');
-const profilePicPreview = document.getElementById('profile-pic-preview');
-let profilePicFile = null;
-resumeForm.addEventListener('submit', (event) => {
+// HTML Elements ko select karna
+var resumeForm = document.getElementById('resume-form');
+var resumeOutput = document.getElementById('resume-output');
+var profilePicFileInput = document.getElementById('profile-pic');
+var profilePicPreview = document.getElementById('profile-pic-preview');
+var profilePicFile = null;
+// Resume form ke submit event ko handle karna
+resumeForm.addEventListener('submit', function (event) {
     event.preventDefault();
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const phone = document.getElementById('phone').value;
-    const address = document.getElementById('address').value;
-    const educationData = Array.from(document.querySelectorAll('#education-section .education-entry')).map(entry => {
-        const institution = entry.querySelector('input[name="institution"]').value;
-        const degree = entry.querySelector('input[name="degree"]').value;
-        const startDate = entry.querySelector('input[name="edu-start"]').value;
-        const endDate = entry.querySelector('input[name="edu-end"]').value;
-        return { institution, degree, startDate, endDate };
+    // Input values ko get karna
+    var name = document.getElementById('name').value;
+    var email = document.getElementById('email').value;
+    var phone = document.getElementById('phone').value;
+    var address = document.getElementById('address').value;
+    // Education section ka data get karna
+    var educationData = Array.from(document.querySelectorAll('#education-section .education-entry')).map(function (entry) {
+        var institution = entry.querySelector('input[name="institution"]').value;
+        var degree = entry.querySelector('input[name="degree"]').value;
+        var startDate = entry.querySelector('input[name="edu-start"]').value;
+        var endDate = entry.querySelector('input[name="edu-end"]').value;
+        return { institution: institution, degree: degree, startDate: startDate, endDate: endDate };
     });
-    const workData = Array.from(document.querySelectorAll('#work-section .work-entry')).map(entry => {
-        const company = entry.querySelector('input[name="company"]').value;
-        const position = entry.querySelector('input[name="position"]').value;
-        const startDate = entry.querySelector('input[name="work-start"]').value;
-        const endDate = entry.querySelector('input[name="work-end"]').value;
-        return { company, position, startDate, endDate };
+    // Work experience ka data get karna
+    var workData = Array.from(document.querySelectorAll('#work-section .work-entry')).map(function (entry) {
+        var company = entry.querySelector('input[name="company"]').value;
+        var position = entry.querySelector('input[name="position"]').value;
+        var startDate = entry.querySelector('input[name="work-start"]').value;
+        var endDate = entry.querySelector('input[name="work-end"]').value;
+        return { company: company, position: position, startDate: startDate, endDate: endDate };
     });
-    const skillsData = Array.from(document.querySelectorAll('#skills-section .skill-entry')).map(entry => {
-        const skill = entry.querySelector('input[name="skill"]').value;
-        return { skill };
+    // Skills ka data get karna
+    var skillsData = Array.from(document.querySelectorAll('#skills-section .skill-entry')).map(function (entry) {
+        var skill = entry.querySelector('input[name="skill"]').value;
+        return { skill: skill };
     });
-    // Generate Resume HTML
-    const resumeHTML = `
-        <div class="resume-header">
-            <img src="${profilePicFile ? URL.createObjectURL(profilePicFile) : ''}" class="resume-profile-pic" alt="Profile Picture">
-            <div class="contact-info">
-                <h2>${name}</h2>
-                <p>Email: ${email}</p>
-                <p>Phone: ${phone}</p>
-                <p>Address: ${address}</p>
-            </div>
-        </div>
-        <div class="resume-section">
-            <h3>Education</h3>
-            <ul>
-                ${educationData.map(data => `
-                    <li>
-                        <strong>${data.institution}</strong><br>
-                        Degree: ${data.degree}<br>
-                        ${data.startDate} - ${data.endDate}
-                    </li>
-                `).join('')}
-            </ul>
-        </div>
-        <div class="resume-section">
-            <h3>Work Experience</h3>
-            <ul>
-                ${workData.map(data => `
-                    <li>
-                        <strong>${data.company}</strong><br>
-                        Position: ${data.position}<br>
-                        ${data.startDate} - ${data.endDate}
-                    </li>
-                `).join('')}
-            </ul>
-        </div>
-        <div class="resume-section">
-            <h3>Skills</h3>
-            <ul>
-                ${skillsData.map(data => `
-                    <li>${data.skill}</li>
-                `).join('')}
-            </ul>
-        </div>
-    `;
-    resumeOutput.innerHTML = `
-        <button id="edit-resume" class="edit-button" onclick="editResume()">Edit Resume</button>
-        <button id="download-resume" class="submit-button" onclick="downloadResume()">Download Resume</button>
-        ${resumeHTML}
-    `;
+    // Resume ka HTML generate karna
+    var resumeHTML = "\n        <div class=\"resume-header\">\n            <img src=\"".concat(profilePicFile ? URL.createObjectURL(profilePicFile) : '', "\" class=\"resume-profile-pic\" alt=\"Profile Picture\">\n            <div class=\"contact-info\">\n                <h2>").concat(name, "</h2>\n                <p>Email: ").concat(email, "</p>\n                <p>Phone: ").concat(phone, "</p>\n                <p>Address: ").concat(address, "</p>\n            </div>\n        </div>\n        <div class=\"resume-section\">\n            <h3>Education</h3>\n            <ul>\n                ").concat(educationData.map(function (data) { return "\n                    <li>\n                        <strong>".concat(data.institution, "</strong><br>\n                        Degree: ").concat(data.degree, "<br>\n                        ").concat(data.startDate, " - ").concat(data.endDate, "\n                    </li>\n                "); }).join(''), "\n            </ul>\n        </div>\n        <div class=\"resume-section\">\n            <h3>Work Experience</h3>\n            <ul>\n                ").concat(workData.map(function (data) { return "\n                    <li>\n                        <strong>".concat(data.company, "</strong><br>\n                        Position: ").concat(data.position, "<br>\n                        ").concat(data.startDate, " - ").concat(data.endDate, "\n                    </li>\n                "); }).join(''), "\n            </ul>\n        </div>\n        <div class=\"resume-section\">\n            <h3>Skills</h3>\n            <ul>\n                ").concat(skillsData.map(function (data) { return "\n                    <li>".concat(data.skill, "</li>\n                "); }).join(''), "\n            </ul>\n        </div>\n    ");
+    // Resume ko output mein display karna
+    resumeOutput.innerHTML = "\n        <button id=\"edit-resume\" class=\"edit-button\" onclick=\"editResume()\">Edit Resume</button>\n        <button id=\"download-resume\" class=\"submit-button\" onclick=\"downloadResume()\">Download Resume</button>\n        ".concat(resumeHTML, "\n    ");
     resumeOutput.style.display = 'block';
 });
+// Profile picture ka preview
 function previewImage(event) {
-    const input = event.target;
+    var input = event.target;
     if (input.files && input.files[0]) {
         profilePicFile = input.files[0];
-        const reader = new FileReader();
-        reader.onload = (e) => {
+        var reader = new FileReader();
+        reader.onload = function (e) {
             var _a;
             profilePicPreview.src = (_a = e.target) === null || _a === void 0 ? void 0 : _a.result;
         };
         reader.readAsDataURL(input.files[0]);
     }
 }
+// Profile picture ko select karna
 function editProfilePic() {
     profilePicFileInput.click();
 }
+// Education field ko add karna
 function addEducation() {
-    const educationSection = document.getElementById('education-section');
-    const newEducation = document.createElement('div');
+    var educationSection = document.getElementById('education-section');
+    var newEducation = document.createElement('div');
     newEducation.className = 'education-entry';
-    newEducation.innerHTML = `
-        <input type="text" name="institution" placeholder="Institution" required>
-        <input type="text" name="degree" placeholder="Degree" required>
-        <input type="date" name="edu-start" placeholder="Start Date" required>
-        <input type="date" name="edu-end" placeholder="End Date" required>
-    `;
+    newEducation.innerHTML = "\n        <input type=\"text\" name=\"institution\" placeholder=\"Institution\" required>\n        <input type=\"text\" name=\"degree\" placeholder=\"Degree\" required>\n        <input type=\"date\" name=\"edu-start\" placeholder=\"Start Date\" required>\n        <input type=\"date\" name=\"edu-end\" placeholder=\"End Date\" required>\n    ";
     educationSection.appendChild(newEducation);
 }
+// Work experience field ko add karna
 function addWorkExperience() {
-    const workSection = document.getElementById('work-section');
-    const newWork = document.createElement('div');
+    var workSection = document.getElementById('work-section');
+    var newWork = document.createElement('div');
     newWork.className = 'work-entry';
-    newWork.innerHTML = `
-        <input type="text" name="company" placeholder="Company" required>
-        <input type="text" name="position" placeholder="Position" required>
-        <input type="date" name="work-start" placeholder="Start Date" required>
-        <input type="date" name="work-end" placeholder="End Date" required>
-    `;
+    newWork.innerHTML = "\n        <input type=\"text\" name=\"company\" placeholder=\"Company\" required>\n        <input type=\"text\" name=\"position\" placeholder=\"Position\" required>\n        <input type=\"date\" name=\"work-start\" placeholder=\"Start Date\" required>\n        <input type=\"date\" name=\"work-end\" placeholder=\"End Date\" required>\n    ";
     workSection.appendChild(newWork);
 }
+// Skill field ko add karna
 function addSkill() {
-    const skillsSection = document.getElementById('skills-section');
-    const newSkill = document.createElement('div');
+    var skillsSection = document.getElementById('skills-section');
+    var newSkill = document.createElement('div');
     newSkill.className = 'skill-entry';
-    newSkill.innerHTML = `
-        <input type="text" name="skill" placeholder="Skill" required>
-    `;
+    newSkill.innerHTML = "\n        <input type=\"text\" name=\"skill\" placeholder=\"Skill\" required>\n    ";
     skillsSection.appendChild(newSkill);
 }
+// Resume ko edit karna
 function editResume() {
     resumeOutput.style.display = 'none';
     resumeForm.reset();
 }
+// Resume output par click event handle karna
+resumeOutput.addEventListener("click", function () {
+    console.log("Resume output clicked");
+});
 function downloadResume() {
-    const opt = {
-        margin: 1,
-        filename: 'resume.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-    };
-    html2pdf().from(resumeOutput).set(opt).save();
+    var resumeOutput = document.getElementById("resume-output");
+    var editButton = document.getElementById("edit-resume");
+    var downloadButton = document.getElementById("download-resume");
+    if (resumeOutput) {
+        // Hide the buttons before generating the PDF
+        editButton === null || editButton === void 0 ? void 0 : editButton.classList.add('hidden');
+        downloadButton === null || downloadButton === void 0 ? void 0 : downloadButton.classList.add('hidden');
+        // Ensure the resume output is visible
+        resumeOutput.style.display = 'block';
+        html2pdf().from(resumeOutput).save().then(function () {
+            // Show the buttons again after the PDF is generated
+            editButton === null || editButton === void 0 ? void 0 : editButton.classList.remove('hidden');
+            downloadButton === null || downloadButton === void 0 ? void 0 : downloadButton.classList.remove('hidden');
+        });
+    }
+    else {
+        alert("No resume generated to download.");
+    }
 }
